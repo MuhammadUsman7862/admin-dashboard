@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>
+  AdminHub - Admin Management Portal
+</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="css/custom.css" rel="stylesheet">
+</head>
+<body>
+<a class="skip-link" href="#main">
+  Skip to main content
+</a>
+
+<header>
+<nav class="navbar fixed-top top-nav navbar-dark px-2 px-lg-3" aria-label="Top navigation">
+ <div class="d-flex align-items-center gap-2">
+   <button class="btn btn-outline-light btn-sm" id="sbToggle" type="button" aria-label="Toggle sidebar" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Toggle sidebar">
+    <i class="bi bi-list fs-5">
+    </i>
+   </button>
+    <a class="navbar-brand fw-bold mb-0" href="#dashboard">
+      <i class="bi bi-shield-check">
+       </i>
+     AdminHub
+    </a>
+ </div>
+ <div class="d-flex align-items-center gap-2">
+  <div class="dropdown">
+   <button class="btn btn-outline-light btn-sm position-relative" data-bs-toggle="dropdown" aria-label="Notifications" aria-expanded="false"> 
+     <i class="bi bi-bell">
+     </i>
+      <span id="nBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+       3
+      </span>
+    </button>
+   <ul class="dropdown-menu dropdown-menu-end">
+    <li>
+      <h6 class="dropdown-header">
+        Notifications
+      </h6>
+    </li>
+    <li>
+      <a class="dropdown-item" href="#users">
+        3 users awaiting approval
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item" href="#settings">
+        Review security settings
+      </a>
+    </li>
+    <li>
+      <hr class="dropdown-divider">
+    </li>
+    <li>
+      <button class="dropdown-item" id="markRead" type="button">
+        Mark all as read
+      </button>
+    </li>
+   </ul>
+  </div>
+  <div class="dropdown">
+   <button class="btn btn-light btn-sm d-flex align-items-center gap-2" data-bs-toggle="dropdown" aria-expanded="false">
+     <img id="navAv" class="rounded-circle" width="24" height="24" alt="">
+     <span class="d-none d-sm-inline">
+      Muhammad Usman
+     </span>
+   </button>
+   <ul class="dropdown-menu dropdown-menu-end">
+     <li>
+      <a class="dropdown-item" href="#settings">
+        Profile &amp; settings
+      </a>
+     </li>
+     <li>
+      <hr class="dropdown-divider">
+     </li>
+     <li>
+      <button class="dropdown-item text-danger" id="logout" type="button">
+        Log out
+      </button>
+     </li>
+   </ul>
+  </div>
+ </div>
+</nav>
+</header>
+
+<aside class="sidebar">
+ <nav id="sidebar" class="offcanvas-lg offcanvas-start" tabindex="-1" aria-label="Sidebar navigation">
+  <div class="offcanvas-header border-bottom">
+    <h5 class="offcanvas-title">
+      Menu
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Close">
+    </button>
+  </div>
+  <div class="offcanvas-body flex-column p-3 p-lg-0">
+   <ul class="nav nav-pills flex-column gap-1 w-100">
+    <li>
+      <a class="nav-link" href="#dashboard" data-view="dashboard">
+       <i class="bi bi-speedometer2">
+       </i>
+       Dashboard
+      </a>
+    </li>
+    <li>
+      <a class="nav-link" href="#users" data-view="users">
+        <i class="bi bi-people">
+        </i>
+         Users
+        </a>
+      </li>
+    <li>
+      <a class="nav-link" href="#register" data-view="register">
+        <i class="bi bi-person-plus">
+        </i>
+         Register
+        </a>
+      </li>
+    <li>
+      <a class="nav-link" href="#settings" data-view="settings">
+        <i class="bi bi-gear">
+        </i>
+         Settings
+        </a>
+      </li>
+   </ul>
+  </div>
+ </nav>
+</aside>
+
+<main id="main" class="main container-fluid px-3 px-lg-4 pb-5" tabindex="-1">
+ <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+  <div><h1 class="h3 mb-0" id="pageTitle">Dashboard</h1>
+   <nav aria-label="breadcrumb"><ol class="breadcrumb mb-0 small"><li class="breadcrumb-item">Home</li><li class="breadcrumb-item active" id="crumb" aria-current="page">Dashboard</li></ol></nav></div>
+ </div>
+
+ <!-- DASHBOARD -->
+ <section id="view-dashboard" data-view-section>
+  <div class="card welcome mb-4">
+    <div class="card-body d-flex flex-wrap justify-content-between align-items-center gap-3">
+     <div>
+      <h2 class="h4">Welcome back, Usman!</h2>
+       <p class="mb-0">Here is what is happening with your users today.
+       </p>
+     </div>
+      <a href="#users" class="btn btn-light" data-bs-toggle="tooltip" title="Open user management">Manage users</a>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-4">
+   <div class="col-12 col-sm-6 col-xl-3">
+    <div class="card h-100">
+      <div class="card-body d-flex align-items-center gap-3">
+        <div class="stat-icon bg-primary-subtle text-primary"><i class="bi bi-people"></i></div>
+        <div>
+          <div class="text-muted small">
+            Total users
+          </div>
+          <div class="h3 mb-0" id="c-total">0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <div class="col-12 col-sm-6 col-xl-3">
+    <div class="card h-100">
+      <div class="card-body d-flex align-items-center gap-3">
+        <div class="stat-icon bg-success-subtle text-success">
+          <i class="bi bi-person-check">
+          </i>
+        </div>
+        <div>
+          <div class="text-muted small">
+            Active users
+          </div>
+          <div class="h3 mb-0" id="c-active">
+            0
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <div class="col-12 col-sm-6 col-xl-3">
+    <div class="card h-100">
+      <div class="card-body d-flex align-items-center gap-3">
+        <div class="stat-icon bg-warning-subtle text-warning-emphasis">
+          <i class="bi bi-hourglass-split">
+          </i>
+        </div>
+        <div>
+          <div class="text-muted small">
+            Pending users
+          </div>
+          <div class="h3 mb-0" id="c-pending">
+            0
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <div class="col-12 col-sm-6 col-xl-3">
+    <div class="card h-100">
+      <div class="card-body d-flex align-items-center gap-3">
+        <div class="stat-icon bg-secondary-subtle text-secondary">
+          <i class="bi bi-person-dash">
+          </i>
+        </div>
+        <div>
+          <div class="text-muted small">
+            Inactive users
+          </div>
+          <div class="h3 mb-0" id="c-inactive">
+            0
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="row g-3">
+   <div class="col-12 col-xl-8">
+    <div class="card h-100">
+      <div class="card-header bg-white fw-semibold">
+        Recent activities
+      </div>
+    <ul class="list-group list-group-flush" id="acts">
+    </ul>
+  </div>
+</div>
+   <div class="col-12 col-xl-4">
+    <div class="card h-100">
+      <div class="card-header bg-white fw-semibold">
+        Admin tips
+      </div>
+      <div class="card-body">
+    <div class="accordion" id="tips">
+     <div class="accordion-item">
+      <h3 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#t1" aria-expanded="true" aria-controls="t1">
+          How do I add a user?
+        </button>
+      </h3>
+      <div id="t1" class="accordion-collapse collapse show" data-bs-parent="#tips">
+        <div class="accordion-body">
+          Open Users and press 
+          <strong>
+            Add User
+          </strong>
+          .
+        </div>
+      </div>
+    </div>
+     <div class="accordion-item">
+      <h3 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t2" aria-expanded="false" aria-controls="t2">
+          How do I filter users?
+        </button>
+      </h3>
+      <div id="t2" class="accordion-collapse collapse" data-bs-parent="#tips">
+        <div class="accordion-body">
+          Use the search box or the status filter above the table.
+        </div>
+      </div>
+    </div>
+     <div class="accordion-item">
+      <h3 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t3" aria-expanded="false" aria-controls="t3">
+          Where is the password change?
+        </button>
+      </h3>
+      <div id="t3" class="accordion-collapse collapse" data-bs-parent="#tips">
+        <div class="accordion-body">
+          Settings &rarr; Password tab.
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+</div>
+  </div>
+ </section>
+
+ <!-- USERS -->
+ <section id="view-users" data-view-section class="d-none">
+  <div class="card"><div class="card-body">
+   <div class="row g-2 mb-3 align-items-end">
+    <div class="col-12 col-md-5">
+      <label for="q" class="form-label">
+        Search
+      </label>
+      <input id="q" type="search" class="form-control" placeholder="Name, email or role">
+    </div>
+    <div class="col-6 col-md-3">
+      <label for="sf" class="form-label">
+        Status
+      </label>
+      <select id="sf" class="form-select">
+        <option value="">
+          All
+        </option>
+        <option>
+          Active
+        </option>
+        <option>
+          Pending
+        </option>
+        <option>
+          Inactive
+        </option>
+      </select>
+    </div>
+    <div class="col-6 col-md-4 text-md-end">
+      <button class="btn btn-primary w-100 w-md-auto" id="addBtn" type="button">
+        <i class="bi bi-plus-lg">
+        </i> 
+        Add User
+      </button>
+    </div>
+   </div>
+   <div class="table-responsive">
+    <table class="table table-hover align-middle">
+     <caption class="visually-hidden">
+      List of users
+    </caption>
+     <thead>
+      <tr>
+        <th scope="col">
+          User
+        </th>
+        <th scope="col" class="d-none d-md-table-cell">
+          Email
+        </th>
+        <th scope="col" class="d-none d-lg-table-cell">
+          Role
+        </th>
+        <th scope="col" class="d-none d-lg-table-cell">
+          Registered
+        </th>
+        <th scope="col">
+          Status
+        </th>
+        <th scope="col" class="text-end">
+          Actions
+        </th>
+      </tr>
+    </thead>
+     <tbody id="tb">
+     </tbody>
+
+    </table>
+   </div>
+   <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+    <span class="small text-muted" id="info" aria-live="polite"></span>
+    <nav aria-label="User pages">
+      <ul class="pagination pagination-sm mb-0" id="pg">
+      </ul>
+    </nav>
+   </div>
+  </div>
+</div>
+ </section>
+
+ <!-- REGISTER -->
+ <section id="view-register" data-view-section class="d-none">
+  <div class="card">
+    <div class="card-body">
+     <form id="regForm" class="needs-validation" novalidate>
+      <div class="row g-3">
+       <div class="col-12 col-md-6">
+        <label for="rName" class="form-label">
+          Full name
+        </label>
+        <input id="rName" name="name" class="form-control" required minlength="3" autocomplete="name">
+        <div class="invalid-feedback">
+          Enter your full name (3+ characters).
+        </div>
+      </div>
+     <div class="col-12 col-md-6">
+      <label for="rEmail" class="form-label">
+        Email
+      </label>
+      <input id="rEmail" type="email" name="email" class="form-control" required autocomplete="email">
+      <div class="invalid-feedback">
+        Enter a valid email address.
+      </div>
+    </div>
+     <div class="col-12 col-md-6">
+      <label for="rPhone" class="form-label">
+        Phone
+      </label>
+      <input id="rPhone" type="tel" name="phone" class="form-control" required pattern="[0-9+\-\s]{10,15}" placeholder="0300 1234567" autocomplete="tel">
+      <div class="invalid-feedback">
+        Enter a valid phone number (10-15 digits).
+      </div>
+    </div>
+     <div class="col-12 col-md-6">
+      <label for="rDept" class="form-label">
+        Department
+      </label>
+      <select id="rDept" name="dept" class="form-select" required>
+        <option value="">
+          Choose...
+        </option>
+        <option>
+          Engineering
+        </option>
+        <option>
+          Marketing
+        </option>
+        <option>
+          Finance
+        </option>
+        <option>
+          Human Resources
+        </option>
+      </select>
+      <div class="invalid-feedback">
+        Please select a department.
+      </div>
+    </div>
+     <div class="col-12 col-md-6">
+      <label for="rPw" class="form-label">
+        Password
+      </label>
+      <input id="rPw" type="password" name="pw" class="form-control" required pattern="(?=.*\d)(?=.*[A-Za-z]).{8,}" autocomplete="new-password">
+      <div class="form-text">
+        At least 8 characters with a letter and a number.
+      </div>
+      <div class="invalid-feedback">
+        Password does not meet the rules.
+      </div>
+    </div>
+     <div class="col-12 col-md-6">
+      <label for="rCpw" class="form-label">
+        Confirm password
+      </label>
+      <input id="rCpw" type="password" name="cpw" class="form-control" required autocomplete="new-password">
+      <div class="invalid-feedback">
+        Passwords must match.
+      </div>
+    </div>
+     <div class="col-12 col-md-6">
+      <fieldset>
+        <legend class="form-label fs-6">
+          Gender
+        </legend>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="gender" id="gM" required>
+        <label class="form-check-label" for="gM">
+          Male
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="gender" id="gF">
+        <label class="form-check-label" for="gF">
+          Female
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="gender" id="gO">
+        <label class="form-check-label" for="gO">
+          Other
+        </label>
+      </div>
+      <div class="invalid-feedback d-block gender-fb" style="display:none!important">
+        Please choose a gender.
+      </div>
+    </fieldset>
+  </div>
+     <div class="col-12 col-md-6">
+      <label for="rImg" class="form-label">
+        Profile image (max 2 MB)
+      </label>
+      <input id="rImg" type="file" accept="image/*" name="img" class="form-control" required>
+      <div class="invalid-feedback">
+        Upload an image file under 2 MB.
+      </div>
+      <img id="prev" class="avatar mt-2 d-none" alt="Profile preview">
+    </div>
+     <div class="col-12">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="rTerms" required>
+        <label class="form-check-label" for="rTerms">
+          I agree to the terms and conditions
+        </label>
+        <div class="invalid-feedback">
+          You must accept the terms.
+        </div>
+      </div>
+    </div>
+     <div class="col-12">
+      <button class="btn btn-primary" type="submit">
+        Register
+      </button>
+       <button class="btn btn-outline-secondary" type="reset">
+        Reset
+      </button>
+    </div>
+    </div>
+   </form>
+  </div>
+</div>
+ </section>
+
+ <!-- SETTINGS -->
+ <section id="view-settings" data-view-section class="d-none">
+  <div class="card">
+    <div class="card-body">
+      <ul class="nav nav-tabs flex-nowrap overflow-auto" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active text-nowrap" data-bs-toggle="tab" data-bs-target="#s1" type="button" role="tab" aria-controls="s1" aria-selected="true">
+            Profile
+          </button>
+        </li>
+       <li class="nav-item" role="presentation">
+        <button class="nav-link text-nowrap" data-bs-toggle="tab" data-bs-target="#s2" type="button" role="tab" aria-controls="s2" aria-selected="false">
+          Account
+        </button>
+      </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link text-nowrap" data-bs-toggle="tab" data-bs-target="#s3" type="button" role="tab" aria-controls="s3" aria-selected="false">
+        Password
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link text-nowrap" data-bs-toggle="tab" data-bs-target="#s4" type="button" role="tab" aria-controls="s4" aria-selected="false">
+        Notifications
+      </button>
+    </li>
+   </ul>
+   <div class="tab-content pt-4">
+    <div class="tab-pane fade show active" id="s1" role="tabpanel">
+      <form class="needs-validation save-form" novalidate data-msg="Profile saved">
+        <div class="row g-3">
+          <div class="col-12 col-md-6">
+            <label class="form-label" for="pName">
+              Full name
+            </label>
+            <input id="pName" class="form-control" value="Muhammad Usman" required>
+            <div class="invalid-feedback">
+              Name is required.
+            </div>
+          </div>
+     <div class="col-12 col-md-6">
+      <label class="form-label" for="pEmail">
+        Email
+      </label>
+      <input id="pEmail" type="email" class="form-control" value="admin@example.com" required>
+      <div class="invalid-feedback">
+        Enter a valid email.
+      </div>
+    </div>
+     <div class="col-12">
+      <label class="form-label" for="pBio">
+        Bio
+      </label>
+      <textarea id="pBio" class="form-control" rows="3" maxlength="200">
+        AI engineer and portal administrator.
+      </textarea>
+    </div>
+     <div class="col-12">
+      <button class="btn btn-primary">
+        Save profile
+      </button>
+    </div>
+  </div>
+</form>
+</div>
+    <div class="tab-pane fade" id="s2" role="tabpanel">
+      <form class="needs-validation save-form" novalidate data-msg="Account settings saved">
+        <div class="row g-3">
+         <div class="col-12 col-md-6">
+          <label class="form-label" for="aUser">
+            Username
+          </label>
+           <input id="aUser" class="form-control" value="usman" required minlength="3">
+           <div class="invalid-feedback">
+            Username needs 3+ characters.
+          </div>
+        </div>
+     <div class="col-12 col-md-6">
+      <label class="form-label" for="aLang">
+        Language
+      </label>
+      <select id="aLang" class="form-select">
+        <option>
+          English
+        </option>
+        <option>
+          Urdu
+        </option>
+      </select>
+    </div>
+     <div class="col-12">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="a2fa" checked>
+        <label class="form-check-label" for="a2fa">
+          Two-factor authentication
+        </label>
+      </div>
+    </div>
+     <div class="col-12">
+      <button class="btn btn-primary">
+        Save account
+      </button>
+    </div>
+  </div>
+</form>
+</div>
+    <div class="tab-pane fade" id="s3" role="tabpanel">
+      <form class="needs-validation save-form" novalidate data-msg="Password changed" data-reset>
+        <div class="row g-3">
+     <div class="col-12 col-md-6"><label class="form-label" for="oldPw">Current password</label><input id="oldPw" type="password" class="form-control" required autocomplete="current-password"><div class="invalid-feedback">Enter your current password.</div></div><div class="w-100 m-0"></div>
+     <div class="col-12 col-md-6"><label class="form-label" for="newPw">New password</label><input id="newPw" name="pw" type="password" class="form-control" required pattern="(?=.*\d)(?=.*[A-Za-z]).{8,}" autocomplete="new-password"><div class="invalid-feedback">Min 8 characters with a letter and a number.</div></div>
+     <div class="col-12 col-md-6"><label class="form-label" for="newCpw">Confirm new password</label><input id="newCpw" name="cpw" type="password" class="form-control" required autocomplete="new-password"><div class="invalid-feedback">Passwords must match.</div></div>
+     <div class="col-12"><button class="btn btn-primary">Change password</button></div></div></form></div>
+    <div class="tab-pane fade" id="s4" role="tabpanel"><form class="save-form" data-msg="Notification preferences saved"><div class="vstack gap-3">
+     <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="n1" checked><label class="form-check-label" for="n1">Email notifications</label></div>
+     <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="n2"><label class="form-check-label" for="n2">SMS alerts</label></div>
+     <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="n3" checked><label class="form-check-label" for="n3">New user registrations</label></div>
+     <div><button class="btn btn-primary">Save preferences</button></div></div></form></div>
+   </div>
+  </div></div>
+ </section>
+</main>
+
+<!-- Add / Edit modal -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><form class="modal-content needs-validation" id="userForm" novalidate>
+ <div class="modal-header"><h2 class="modal-title h5" id="userModalTitle">Add User</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+ <div class="modal-body vstack gap-3"><input type="hidden" id="uId">
+  <div><label for="uName" class="form-label">Name</label><input id="uName" class="form-control" required minlength="3"><div class="invalid-feedback">Enter a name (3+ characters).</div></div>
+  <div><label for="uEmail" class="form-label">Email</label><input id="uEmail" type="email" class="form-control" required><div class="invalid-feedback">Enter a valid email.</div></div>
+  <div class="row g-3"><div class="col-6"><label for="uRole" class="form-label">Role</label><select id="uRole" class="form-select"><option>Admin</option><option>Editor</option><option>Viewer</option></select></div>
+  <div class="col-6"><label for="uStatus" class="form-label">Status</label><select id="uStatus" class="form-select"><option>Active</option><option>Pending</option><option>Inactive</option></select></div></div></div>
+ <div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary">Save</button></div>
+</form></div></div>
+
+<!-- Delete modal -->
+<div class="modal fade" id="delModal" tabindex="-1" aria-labelledby="delTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+ <div class="modal-header"><h2 class="modal-title h5" id="delTitle">Delete user</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+ <div class="modal-body">Are you sure you want to delete <strong id="delName"></strong>? This cannot be undone.</div>
+ <div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button><button type="button" class="btn btn-danger" id="delOk">Delete</button></div>
+</div></div></div>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3" id="toasts" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
